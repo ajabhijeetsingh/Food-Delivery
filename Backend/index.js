@@ -21,8 +21,8 @@ app.use(express.json())
 
 app.use(cors(
     {
-        origin: [""],
-        methods: ["POST","GET"],
+        origin: ["https://food-delivery-2922.vercel.app"],
+        methods: ["POST", "GET"],
         credentials: true
     }
 ))
@@ -38,8 +38,8 @@ connectDB();
 app.use("/api/food", foodRouter)
 app.use("/images", express.static('uploads'))
 app.use("/api/user", userRouter)
-app.use("/api/cart",cartRouter)
-app.use("/api/order",orderRouter);
+app.use("/api/cart", cartRouter)
+app.use("/api/order", orderRouter);
 
 
 
