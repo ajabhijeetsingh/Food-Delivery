@@ -7,6 +7,9 @@ import userRouter from "./routes/userRoute.js"
 import 'dotenv/config'
 import cartRouter from "./routes/cartRoute.js"
 import orderRouter from "./routes/orderRoute.js"
+import upload from "./config/multer-config.js"
+import 'dotenv/config';
+
 
 
 
@@ -35,8 +38,24 @@ connectDB();
 
 // api endpoints 
 
+app.post('/api/upload', upload.single('image'), (req, res) => {
+    res.json({ file: req.file });
+});
+
+// Route for serving images dynamically
+app.get('/images/:filename', (req, res) => {
+    const { filename } = req.params;
+    const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+        bucketName: 'uploads' // GridFS bucket name
+    });
+
+    bucket.openDownloadStreamByName(filename).pipe(res);
+});
+
+
+
 app.use("/api/food", foodRouter)
-app.use("/images", express.static('uploads'))
+// app.use("/images", express.static('uploads'))
 app.use("/api/user", userRouter)
 app.use("/api/cart", cartRouter)
 app.use("/api/order", orderRouter);
