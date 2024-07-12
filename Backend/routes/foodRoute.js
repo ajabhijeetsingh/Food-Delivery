@@ -8,14 +8,14 @@ const foodRouter = express.Router();
 // Image Storage Engine
 
 const storage = multer.diskStorage({
-    // destination: "uploads",
-    destination: function (req, file, cb) {
-        cb(null, './uploads'); // Assuming 'uploads' directory exists and is writable
-    },
+    destination: "uploads",
+    // destination: function (req, file, cb) {
+    //     cb(null, './uploads'); // Assuming 'uploads' directory exists and is writable
+    // },
     filename:(req,file,cb) =>{
-        // return cb(null,`${Date.now()}${file.originalname}`)
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.mimetype.split('/')[1]);
+        return cb(null,`${Date.now()}${file.originalname}`)
+        // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        // cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.mimetype.split('/')[1]);
     }
 })
 
