@@ -8,7 +8,7 @@ const addFood = async (req, res) => {
 
     // let image_filename = `${req.file.filename}`;
     // let image_filename = req.file.filename;
-    const imageFilename = req.file.filename;
+    const image = req.file.filename;
 
     const food = new foodModel({
         name: req.body.name,
@@ -16,7 +16,7 @@ const addFood = async (req, res) => {
         price: req.body.price,
         category: req.body.category,
         // imageFilename: image_filename
-        imageFilename
+        image
     })
     try {
         await food.save();
