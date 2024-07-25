@@ -6,17 +6,14 @@ import fs from 'fs'
 
 const addFood = async (req, res) => {
 
-    // let image_filename = `${req.file.filename}`;
-    // let image_filename = req.file.filename;
-    const image = req.file.filename;
+    let image_filename = `${req.file.filename}`;
 
     const food = new foodModel({
         name: req.body.name,
         description: req.body.description,
         price: req.body.price,
         category: req.body.category,
-        // imageFilename: image_filename
-        image
+        image: image_filename
     })
     try {
         await food.save();
@@ -46,22 +43,7 @@ const listFood = async (req,res)=>{
 const removeFood = async (req,res)=>{
     try {
         const food = await foodModel.findById(req.body.id);
-        if (!food) {
-            return res.json({ success: false, message: "Food item not found" });
-        }
-        // Remove image from GridFS
-        const bucket = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-            bucketName: 'uploads' // Make sure this matches your GridFS bucket name
-        });
-
-        // Find the file by filename and delete it
-        const files = await bucket.find({ filename: food.imageFilename }).toArray();
-        if (files.length > 0) {
-            const file = files[0];
-            bucket.delete(file._id);
-        }
-
-        // fs.unlink(`uploads/${food.image}`,()=>{})
+        fs.unlink(`uploads/${food.image}`,()=>{})
         await foodModel.findByIdAndDelete(req.body.id);
         res.json({success:true,message:"Food removed"})
     } catch (error) {
