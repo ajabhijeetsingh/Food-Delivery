@@ -21,8 +21,8 @@ app.use(express.json())
 
 app.use(cors(
     {
-        origin: [""],
-        methods: ["POST","GET"],
+        origin: ["https://abhijeet-ka-dhaba.vercel.app","https://food-delivery-rho-nine.vercel.app"],
+        methods: ["POST", "GET"],
         credentials: true
     }
 ))
