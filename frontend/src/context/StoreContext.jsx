@@ -8,7 +8,7 @@ export const StoreContext = createContext(null);
 const StoreContextProvider = (props) => {
 
     const [cartItems, setCartItems] = useState({});
-    const url = "https://food-delivery-back-lilac.vercel.app/";
+    const url = "https://food-delivery-back-lilac.vercel.app";
     const [token, setToken] = useState("");
     const [food_list, setFoodlist] = useState([])
 
@@ -43,12 +43,15 @@ const StoreContextProvider = (props) => {
     }
 
     const fetchFoodList = async () => {
-        const response = await axios.get(url + "/api/food/list");
+        // const response = await axios.get(url + "/api/food/list");
+        const response = await axios.get(`${url}/api/food/list`);
         setFoodlist(response.data.data);
     }
 
     const loadCartData = async (token) => {
-        const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } });
+        // const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } });
+        const response = await axios.post(`${url}/api/cart/get`, {}, { headers: { token } });
+
         setCartItems(response.data.cartData)
 
     }
